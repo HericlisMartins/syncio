@@ -1,0 +1,31 @@
+{
+  "name": "syncio-assessment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Syncio Technical Assessment - Fullstack Frontend-Focused",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean",
+    "setup": "pnpm install && pnpm run setup:backend && pnpm run setup:frontend",
+    "setup:backend": "cd apps/backend && composer install && php artisan key:generate",
+    "setup:frontend": "cd apps/frontend && pnpm install",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^2.5.5",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.2",
+    "turbo": "^2.5.5",
+    "typescript": "^5.5.3"
+  },
+  "packageManager": "pnpm@9.5.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

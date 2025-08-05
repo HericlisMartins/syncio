@@ -1,0 +1,20 @@
+{
+    "name": "@syncio/shared-types",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Shared TypeScript types for Syncio Assessment",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "type-check": "tsc --noEmit",
+        "clean": "rm -rf dist"
+    },
+    "devDependencies": {
+        "typescript": "^5.5.3"
+    },
+    "files": [
+        "dist/**"
+    ]
+}
