@@ -6,7 +6,6 @@
     "type": "module",
     "description": "Syncio Assessment Backend - Laravel API",
     "scripts": {
-        "build": "vite build",
         "dev": "php artisan serve --host=0.0.0.0 --port=8000",
         "test": "php artisan test",
         "lint": "vendor/bin/pint",

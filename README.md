@@ -17,10 +17,8 @@ A modern **Vue.js + Laravel** application that demonstrates JSON payload compari
 ```
 syncio/
 ├── apps/
-│   ├── frontend/          # Vue.js SPA
+│   ├── frontend/          # Vue.js SPA with TypeScript types
 │   └── backend/           # Laravel API
-├── packages/
-│   └── shared-types/      # Shared TypeScript definitions
 ├── tools/
 │   └── docker/           # Docker configurations
 ├── package.json          # Root workspace config

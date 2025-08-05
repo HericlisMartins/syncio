@@ -2,7 +2,7 @@
 import type {
   ComparisonResult,
   DiffResult,
-} from '@syncio/shared-types'
+} from '@/types'
 
 interface Props {
   comparison: ComparisonResult
