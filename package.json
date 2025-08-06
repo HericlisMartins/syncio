@@ -9,9 +9,10 @@
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
-    "setup": "pnpm install && pnpm run setup:backend && pnpm run setup:frontend",
+    "setup": "pnpm install && pnpm run setup:backend && pnpm run setup:frontend && pnpm run setup:tunnel",
     "setup:backend": "cd apps/backend && composer install && php artisan key:generate",
     "setup:frontend": "cd apps/frontend && pnpm install",
+    "setup:tunnel": "cd apps/tunnel && pnpm install",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:build": "docker-compose build"
