@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -135,6 +136,76 @@ class PayloadController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve payload: '.$e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    /**
+     * Handle Shopify product update webhook
+     */
+    public function shopifyProductUpdate(Request $request): JsonResponse
+    {
+        // Log the incoming request for debugging
+        Log::info('Shopify Product Update Webhook Received', [
+            'headers' => $request->headers->all(),
+            'payload' => $request->all(),
+        ]);
+
+        try {
+            // Get Shopify webhook signature
+            $shopifySignature = $request->header('X-Shopify-Hmac-Sha256');
+            
+            // Check if we have a Shopify API secret configured
+            $shopifySecret = config('services.shopify.api_secret');
+            
+            // Only validate signature if both signature and secret are present
+            if ($shopifySignature && $shopifySecret) {
+                $calculatedSignature = base64_encode(hash_hmac('sha256', $request->getContent(), $shopifySecret, true));
+                
+                if (!hash_equals($shopifySignature, $calculatedSignature)) {
+                    Log::warning('Invalid Shopify webhook signature', [
+                        'provided' => $shopifySignature,
+                        'calculated' => $calculatedSignature,
+                    ]);
+                    
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid Shopify webhook signature',
+                    ], 403);
+                }
+            } else {
+                Log::info('Shopify webhook signature validation skipped', [
+                    'has_signature' => !empty($shopifySignature),
+                    'has_secret' => !empty($shopifySecret),
+                ]);
+            }
+
+            // Process the product update payload
+            $productData = $request->input('product', $request->all());
+
+            Log::info('Shopify product update processed', [
+                'product_id' => $productData['id'] ?? 'unknown',
+                'product_title' => $productData['title'] ?? 'unknown',
+            ]);
+
+            // Here you would typically update your database or perform other actions
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Shopify product update processed successfully',
+                'data' => $productData,
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Failed to process Shopify product update', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process Shopify product update: '.$e->getMessage(),
             ], 500);
         }
     }

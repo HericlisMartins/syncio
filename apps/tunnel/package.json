@@ -1,0 +1,45 @@
+{
+    "name": "tunnel",
+    "version": "1.0.0",
+    "description": "Simple HTTP tunnel application",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsx src/index.ts",
+        "dev:webhook": "tsx src/webhook-examples.ts webhook",
+        "dev:payment": "tsx src/webhook-examples.ts payment",
+        "dev:api": "tsx src/webhook-examples.ts api",
+        "start": "node dist/index.js",
+        "clean": "rm -rf dist",
+        "type-check": "tsc --noEmit",
+        "lint": "eslint src --ext .ts"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "http-proxy-middleware": "^2.0.6",
+        "localtunnel": "^2.0.2",
+        "qrcode-terminal": "^0.12.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.13",
+        "@types/express": "^4.17.17",
+        "@types/localtunnel": "^2.0.4",
+        "@types/node": "^20.5.0",
+        "@types/qrcode-terminal": "^0.12.0",
+        "@typescript-eslint/eslint-plugin": "^6.4.0",
+        "@typescript-eslint/parser": "^6.4.0",
+        "eslint": "^8.57.0",
+        "tsx": "^3.12.7",
+        "typescript": "^5.5.3"
+    },
+    "keywords": [
+        "tunnel",
+        "http",
+        "proxy",
+        "typescript"
+    ],
+    "author": "",
+    "license": "MIT"
+}

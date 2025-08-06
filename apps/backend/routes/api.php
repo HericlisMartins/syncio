@@ -31,6 +31,10 @@ Route::prefix('payloads')->group(function () {
 Route::post('/compare', [PayloadController::class, 'compare'])
     ->name('payloads.compare');
 
+// Shopify product update webhook route
+Route::get('/webhooks/shopify/product-update', [PayloadController::class, 'shopifyProductUpdate'])
+    ->name('webhooks.shopify.product-update');
+
 // Health check route
 Route::get('/health', function () {
     return response()->json([

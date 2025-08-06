@@ -1,13 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
-import type {
-  ApiResponse,
-  AppState,
-  ComparisonResult,
-  PayloadResponse,
-  Product,
-} from '@/types'
+import type { ApiResponse, AppState, ComparisonResult, PayloadResponse, Product } from '@/types'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'
 
@@ -18,7 +12,7 @@ export const useAppStore = defineStore('app', {
     comparison: null,
     loading: false,
     error: null,
-    countdown: 30,
+    countdown: 2,
   }),
 
   getters: {
@@ -109,19 +103,19 @@ export const useAppStore = defineStore('app', {
     },
 
     async fetchPayloadData(payloadNumber: 1 | 2): Promise<Product> {
-      // This would normally fetch from the assessment URL
+      // This would normally fetch from the shopify Product api
       // For now, using mock data that matches the assessment structure
       const mockData: Product = {
         id: `product_${payloadNumber}`,
         title: `Sample Product ${payloadNumber}`,
         body_html: `<p>Description for product ${payloadNumber}</p>`,
         vendor: 'Syncio',
-        product_type: 'Electronics',
+        product_type: payloadNumber === 1 ? 'Electronics' : '',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         published_at: new Date().toISOString(),
-        tags: 'sample,test,product',
-        status: 'active',
+        tags: `product-${payloadNumber}, example`,
+        status: `${payloadNumber === 1 ? 'active' : 'draft'}`,
         published_scope: 'web',
         admin_graphql_api_id: `gid://shopify/Product/${payloadNumber}`,
         images: [
@@ -167,7 +161,6 @@ export const useAppStore = defineStore('app', {
     },
 
     startCountdown() {
-      this.countdown = 30
       const timer = setInterval(() => {
         this.countdown--
         if (this.countdown <= 0) {

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'shopify' => [
+        'api_secret' => env('SHOPIFY_API_SECRET'),
+        'api_key' => env('SHOPIFY_API_KEY'),
+        'shop_domain' => env('SHOPIFY_SHOP_DOMAIN'),
+    ],
+
 ];
